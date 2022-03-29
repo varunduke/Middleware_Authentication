@@ -1,35 +1,35 @@
 const router = require('express').Router();
 let User = require('../models/user');
 
-// router.use((req, res, next) => {
-//     if(req.user)
-//     {
-//         next();
-//     }
-//     else{
-//         res.redirect('/');
-//     }
-// });
+router.use((req, res, next) => {
+    if(req.user)
+    {
+        next();
+    }
+    else{
+        res.redirect('/');
+    }
+});
 
-// router.use((req, res, next) => {
-//     if(req.user)
-//     {
-//         next();
-//     }
-//     else{
-//         res.redirect('/auth/signIn');
-//     }
-// });
+router.use((req, res, next) => {
+    if(req.user)
+    {
+        next();
+    }
+    else{
+        res.redirect('/auth/signIn');
+    }
+});
 
-// router.use((req, res, next) => {
-//     if(req.user.cc)
-//     {
-//         next();
-//     }
-//     else{
-//         res.redirect('/auth/creditCard');
-//     }
-// });
+router.use((req, res, next) => {
+    if(req.user.cc)
+    {
+        next();
+    }
+    else{
+        res.redirect('/auth/creditCard');
+    }
+});
 
 
 router.route('/').get((req, res) =>{

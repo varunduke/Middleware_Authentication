@@ -2,35 +2,35 @@ const CustomerRouter = require('express').Router();
 //let User = require('../models/user');
 let Customer = require('../models/customer');
 
-// CustomerRouter.use((req, res, next) => {
-//     if(req.user)
-//     {
-//         next();
-//     }
-//     else{
-//         res.redirect('/');
-//     }
-// });
+CustomerRouter.use((req, res, next) => {
+    if(req.user)
+    {
+        next();
+    }
+    else{
+        res.redirect('/');
+    }
+});
 
-// CustomerRouter.use((req, res, next) => {
-//     if(req.user)
-//     {
-//         next();
-//     }
-//     else{
-//         res.redirect('/auth/signIn');
-//     }
-// });
+CustomerRouter.use((req, res, next) => {
+    if(req.user)
+    {
+        next();
+    }
+    else{
+        res.redirect('/auth/signIn');
+    }
+});
 
-// CustomerRouter.use((req, res, next) => {
-//     if(req.user.cc)
-//     {
-//         next();
-//     }
-//     else{
-//         res.redirect('/auth/creditCard');
-//     }
-// });
+CustomerRouter.use((req, res, next) => {
+    if(req.user.cc)
+    {
+        next();
+    }
+    else{
+        res.redirect('/auth/creditCard');
+    }
+});
 
 CustomerRouter.route('/').get((req, res) =>{
     Customer.find().then(users => res.json(users)).catch(err => res.status(400).json('Error: ' + err));
@@ -38,7 +38,7 @@ CustomerRouter.route('/').get((req, res) =>{
 
 CustomerRouter.route('/add').post((req, res) =>{
     const customer = req.body.customer;
-    const newUser = new Customer({customer});
+    const newUser = new Customer(customer);
 
     newUser.save().then(() => res.json('Customer Added!')).catch(err => res.status(400).json('Error: ' + err));
     //newUser.save().then(() => res.json('User Added!')).catch(err => res.status(400).json('Error: ' + err));
@@ -54,10 +54,10 @@ CustomerRouter.route('/:id').delete((req, res) => {
 });
 
 CustomerRouter.route('/:id').put((req, res) => {
-    Customer.findById(req.params.id).then(user => {
-        user.username = req.body.username;
+    Customer.findById(req.params.id).then(customer => {
+        customer.customer = req.body.customer;
 
-        user.save().then(() => res.json('Customer updated!'))
+        customer.save().then(() => res.json('Customer updated!'))
     }).catch(err => res.status(400).json('Error ' + err));
 });
 
